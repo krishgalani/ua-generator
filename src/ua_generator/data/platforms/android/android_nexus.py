@@ -72,3 +72,15 @@ def get_version(options: Options) -> AndroidVersion:
     selected_version.build_number = build_number
     selected_version.platform_model = random.choice(platform_models)
     return selected_version
+def num_possible_versions() -> float:
+    count : float = 0.0
+    for i in range(len(versions)):
+        version_count : float = 0.0
+        if type(versions[i].builds) is tuple:
+            version_count += versions[i].builds[1] - versions[i].builds[0] + 1
+        else:
+            version_count += 1
+        version_count *= len(versions[i].build_numbers) * len(string.ascii_uppercase) * 596700 # (22-17+1) * (12 - 0 + 1) * (29-0+1) * (255 -1+1)
+        version_count *= len(platform_models)
+        count += version_count
+    return count

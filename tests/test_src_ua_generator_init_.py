@@ -6,7 +6,7 @@ from src.ua_generator.data.version import VersionRange, Version
 from src.ua_generator.data.browsers import chrome,safari,edge,firefox
 from src.ua_generator.data.platforms import linux,ios,macos,windows
 from src.ua_generator.data.platforms.android import android_nexus,android_samsung,android_pixel
-from src.ua_generator.data import VERSION_SUPPORTED_MODULES
+from src.ua_generator.data import VERSION_SUPPORTED_MODULES,PLATFORMS_ANDROID
 class TestUaGeneratorSrcInit(unittest.TestCase):
     def test_idx_maps_persist_on_browser_and_platform_modules_across_generates(self):
         options = Options(version_ranges={
@@ -38,3 +38,8 @@ class TestUaGeneratorSrcInit(unittest.TestCase):
             # Check if each element in the list is an instance of Version
             for version in versions:
                 self.assertIsInstance(version, Version, f"Expected each element to be a 'Version', got {type(version)}")
+    def test_num_possible_versions(self):
+        for m in VERSION_SUPPORTED_MODULES:
+            module = globals()[m]
+            self.assertGreater(module.num_possible_versions(),0)
+            # print(f"\n{m}: {module.num_possible_versions()}")

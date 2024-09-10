@@ -52,3 +52,12 @@ def get_version(options: Options) -> ChromiumVersion:
         selected_version = random.choice(versions)
     selected_version.get_version()
     return selected_version
+
+def num_possible_versions() -> float:
+    count : float = 0.0
+    for i in range(len(versions)):
+       if type(versions[i].minors) is tuple:
+        count += versions[i].minors[1] - versions[i].minors[0] + 1
+       else:
+           count += 1
+    return count
