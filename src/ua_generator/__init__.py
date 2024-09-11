@@ -45,3 +45,14 @@ def generate(device: typing.Union[tuple, str, None] = None,
             if option in versions_idx_map and len(versions_idx_map[option]) == 0:
                 initialize_idx_map(option)
     return user_agent.UserAgent(device, platform, browser, options)
+def generate_n(device: typing.Union[tuple, str, None] = None,
+             platform: typing.Union[tuple, str, None] = None,
+             browser: typing.Union[tuple, str, None] = None,
+             options: typing.Union[_options.Options, None] = None,
+             n: int = 0) -> typing.List[user_agent.UserAgent]:
+    uas = set()
+    while len(uas) < n:
+        ua = generate(device, platform, browser, options)
+        if ua not in uas:
+            uas.add(ua)
+    return uas
